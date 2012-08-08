@@ -11,15 +11,12 @@
 showMenu();
 
 function showMenu() {
-
 	if (!jQuery) {
-		alert("'Bulk change public coment' can not be used. Please file a bug at http://github.com/gill0r/userscripts/");
+		alert("'Bulk change public-comment-field' can not be used. Please file a bug at https://github.com/gill0r/discogs-bulk-comment-field-userscript/issues");
 		return false;
 	}
-	if ($("#userscript_bulk_menu_closed")) {
-		$("#userscript_bulk_menu_closed").slideUp();
-		$("userscript_bulk_menu_closed").remove();
-	}
+	if ($("#userscript_bulk_menu_closed")) 
+		$("#userscript_bulk_menu_closed").slideUp().delay(1000).remove();
 
 	var menuElement = document.createElement('div');
 	menuElement.id = 'userscript_bulk_menu';
