@@ -13,3 +13,6 @@ This is a userscript which allows sellers at discogs.com to bulk modify the publ
 #Compatibility
 Tested with:
 - Google Chrome with Tampermonkey
+
+#Warning
+You use this script at your own risk. Although I tested this script thoroughly, I can not be held responsible for any damage this script may cause (e.g. setting wrong prices on your items to sell). Always double-check which changes have been made before submitting on discogs.com!

@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name			Discogs.com bulk change public-comment-field
-// @version			0.1
+// @version			0.2
 // @namespace		https://github.com/gill0r/discogs-bulk-comment-field-userscript/
 // @description		Allows bulk changing the public-comment-field of your selling items (prepend, suffix and remove text)
 // @updateURL		https://raw.github.com/gill0r/discogs-bulk-comment-field-userscript/master/discogs_bulk.user.js
 // @include			https://www.discogs.com/sell/manage_edit
-// @require			http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
+// @require			http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js
 // ==/UserScript==
 
 showMenu();
@@ -25,8 +25,11 @@ function showMenu() {
 	var menuHtml = '<h3>"Bulk change public-comment-field" Userscript options</h3><p>Please choose what you want to do:</p><ul>';
 	menuHtml += '<li><a id="user_prepend">Prepend text</a></li>';
 	menuHtml += '<li><a id="user_suffix" href="javascript:suffixText(null)">Suffix text</a></li>';
-	menuHtml += '<li><a id="user_replace" >Replace text</a></li></ul>';
-	menuHtml += '<p><a href="https://github.com/gill0r/discogs-bulk-comment-field-userscript/issues">Something is broken? Please file a bug!</a></p>';
+	menuHtml += '<li><a id="user_replace" >Replace text</a></li>';
+	menuHtml += '<li><a id="user_give_discount">Give discount</a></li>';
+	menuHtml += '<li><a id="user_reset_discount">Restore price before discount</a></li>'
+	menuHtml += '<li><a id="user_round_up">Round prices up to first decimal after seperator</a></li>';
+	menuHtml += '</ul><p><a href="https://github.com/gill0r/discogs-bulk-comment-field-userscript/issues">Something is broken? Please file a bug!</a></p>';
 	menuHtml += '<p><a id="user_close">Hide the script options</a></p>';
 
 	menuElement.innerHTML = menuHtml;
@@ -39,16 +42,19 @@ function showMenu() {
 			.addEventListener("click", suffixText);
 	document.getElementById('user_replace').addEventListener("click",
 			replaceText);
+	document.getElementById('user_give_discount').addEventListener("click", setDiscount);
+	document.getElementById('user_reset_discount').addEventListener("click", restoreDiscount);
+	document.getElementById('user_round_up').addEventListener("click", roundUpPrices);
 	document.getElementById('user_close').addEventListener("click", hideMenu);
 
-	jQuery("#userscript_bulk_menu").slideDown();
+	$("#userscript_bulk_menu").slideDown();
 }
 
 function hideMenu(event) {
 	var menuElement = document.createElement('div');
 	menuElement.id = 'userscript_bulk_menu_closed';
-	menuElement.innerHTML = '<p><a id="user_reopen">&rarr; Show "Bulk change public-comment-field" Userscript options</a></p>';
-	jQuery("#userscript_bulk_menu").after(menuElement);
+	menuElement.innerHTML = '<p><a id="user_reopen">&rarr; Show advanced seller options (delivered by Userscript)</a></p>';
+	$("#userscript_bulk_menu").after(menuElement);
 
 	document.getElementById('userscript_bulk_menu_closed').addEventListener(
 			"click", showMenu);
@@ -60,8 +66,8 @@ function prependText(event) {
 	var text = prompt("Enter the text to prepend");
 	if (text == null || text == "")
 		return;
-	jQuery('textarea[name$="comments"]').each(function(i, e) {
-		jQuery(e).val(text + " " + jQuery(e).val());
+	$('textarea[name$="comments"]').each(function(i, e) {
+		$(e).val(text + " " + $(e).val());
 	});
 }
 
@@ -69,8 +75,8 @@ function suffixText(event) {
 	var text = prompt("Enter the text to suffix:");
 	if (text == null || text == "")
 		return;
-	jQuery('textarea[name$="comments"]').each(function(i, e) {
-		jQuery(e).val(jQuery(e).val() + " " + text);
+	$('textarea[name$="comments"]').each(function(i, e) {
+		$(e).val($(e).val() + " " + text);
 	});
 }
 
@@ -85,7 +91,42 @@ function replaceText(event) {
 	if (text == null)
 		text = "";
 
-	jQuery('textarea[name$="comments"]').each(function(i, e) {
-		jQuery(e).val(jQuery(e).val().replace(textToReplace, text));
+	$('textarea[name$="comments"]').each(function(i, e) {
+		$(e).val($(e).val().replace(textToReplace, text));
 	});
+}
+
+function setDiscount(event) {
+	var discount = prompt("Which discount would you like to give (e.g. enter '0.9' for 10% off)?");
+	if (discount == null || discount == "") {
+		alert("You have to enter a valid number!");
+		return false;
+	}
+	
+	$('.item_price').each(function(i, e) {
+		$(e).val(($(e).val() * discount).toFixed(2));
+	})
+}
+
+function restoreDiscount(event) {
+	var discount = prompt("Which discount did you give (e.g. 0.9)?");
+	if (discount == null || discount == "") {
+		alert("You have to enter a valid number!");
+		return false;
+	}
+	
+	$('.item_price').each(function(i, e) {
+		$(e).val(($(e).val() / discount).toFixed(2));
+	})
+}
+
+function roundUpPrices(event) {
+	var doRound = confirm("Do you really want to round the prices up?");
+	if (doRound == null || !doRound) {
+		return false;
+	} 
+	
+	$('.item_price').each(function(i, e) {
+		$(e).val((Math.ceil($(e).val()*10)/10).toFixed(2));
+	})
 }
