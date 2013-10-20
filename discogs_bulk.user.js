@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name			Discogs.com bulk change public-comment-field
-// @version			0.2
+// @version			0.3
 // @namespace		https://github.com/gill0r/discogs-bulk-comment-field-userscript/
 // @description		Allows bulk changing the public-comment-field of your selling items (prepend, suffix and remove text)
 // @updateURL		https://raw.github.com/gill0r/discogs-bulk-comment-field-userscript/master/discogs_bulk.user.js
 // @include			https://www.discogs.com/sell/manage_edit
-// @require			http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js
+// @require			http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // ==/UserScript==
 
 showMenu();
@@ -15,7 +15,7 @@ function showMenu() {
 		alert("'Bulk change public-comment-field' can not be used. Please file a bug at https://github.com/gill0r/discogs-bulk-comment-field-userscript/issues");
 		return false;
 	}
-	if ($("#userscript_bulk_menu_closed")) 
+	if ($("#userscript_bulk_menu_closed"))
 		$("#userscript_bulk_menu_closed").slideUp().delay(1000).remove();
 
 	var menuElement = document.createElement('div');
@@ -34,7 +34,7 @@ function showMenu() {
 
 	menuElement.innerHTML = menuHtml;
 
-	$("#page  h2").after(menuElement);
+	$("#page_content h1").after(menuElement);
 
 	document.getElementById('user_prepend').addEventListener("click",
 			prependText);
@@ -92,7 +92,7 @@ function replaceText(event) {
 		text = "";
 
 	$('textarea[name$="comments"]').each(function(i, e) {
-		$(e).val($(e).val().replace(textToReplace, text));
+		$(e).val($.trim($(e).val().replace(textToReplace, text)));
 	});
 }
 
@@ -102,7 +102,7 @@ function setDiscount(event) {
 		alert("You have to enter a valid number!");
 		return false;
 	}
-	
+
 	$('.item_price').each(function(i, e) {
 		$(e).val(($(e).val() * discount).toFixed(2));
 	})
@@ -114,7 +114,7 @@ function restoreDiscount(event) {
 		alert("You have to enter a valid number!");
 		return false;
 	}
-	
+
 	$('.item_price').each(function(i, e) {
 		$(e).val(($(e).val() / discount).toFixed(2));
 	})
@@ -124,8 +124,8 @@ function roundUpPrices(event) {
 	var doRound = confirm("Do you really want to round the prices up?");
 	if (doRound == null || !doRound) {
 		return false;
-	} 
-	
+	}
+
 	$('.item_price').each(function(i, e) {
 		$(e).val((Math.ceil($(e).val()*10)/10).toFixed(2));
 	})
