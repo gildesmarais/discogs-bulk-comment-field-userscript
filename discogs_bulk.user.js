@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name			Discogs.com bulk change public-comment-field
 // @version			0.3
-// @namespace		https://github.com/gill0r/discogs-bulk-comment-field-userscript/
+// @namespace		https://github.com/gildesmarais/discogs-bulk-comment-field-userscript/
 // @description		Allows bulk changing the public-comment-field of your selling items (prepend, suffix and remove text)
-// @updateURL		https://raw.github.com/gill0r/discogs-bulk-comment-field-userscript/master/discogs_bulk.user.js
+// @updateURL		https://raw.github.com/gildesmarais/discogs-bulk-comment-field-userscript/master/discogs_bulk.user.js
 // @include			https://www.discogs.com/sell/manage_edit
-// @require			http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
+// @require			http://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js
 // ==/UserScript==
 
 showMenu();
