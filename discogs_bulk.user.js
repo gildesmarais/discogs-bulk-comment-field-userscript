@@ -11,8 +11,6 @@
 
 /* global $, alert, prompt, confirm */
 
-showMenu()
-
 function showMenu () {
   if (!$) {
     alert(

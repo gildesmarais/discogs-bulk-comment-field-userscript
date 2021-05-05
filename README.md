@@ -1,20 +1,22 @@
 # Discogs bulk comment-field Userscript
 
-This is a userscript which allows sellers at discogs.com to bulk modify the public comment field. The userscript allows them to prepend, suffix and replace text within that field.
+This is a userscript which enables sellers on discogs.com to bulk modify the public comment field. It allows them to prepend, suffix and replace text within the comment field.
 
 ## Getting started
 
-1. Go to your inventary (https://www.discogs.com/sell/manage).
-2. Select the items you want to edit (you can checkbox them all with the green checkmark image).
-3. Click the Edit-Button.
-4. Voilà. The script will show a small menu above your items. Pretty self-explanatory, hm? :)
+1. Open your [inventary](https://www.discogs.com/sell/manage).
+2. Select the items you want to edit (you can check them all with the checkbox in the header row).
+3. Click the `Edit` Button.
+4. Voilà. The script will show a small menu next to your items.
 
 ## Compatibility
 
 Tested with:
 
-- Google Chrome with Tampermonkey
+- [Violent Monkey](https://violentmonkey.github.io/get-it/)
+
+Violent Monkey runs in Chrome, Firefox 57+, Edge, Chromium, Brave, Opera 15+, Vivaldi, QQBrowser, etc.
 
 ## Warning
 
-You use this script at your own risk. Although I tested this script thoroughly, I can not be held responsible for any damage this script may cause (e.g. setting wrong prices on your items to sell). Always double-check which changes have been made before submitting on discogs.com!
+You use this script at your own risk. Although I tested this script thoroughly, I can not be held responsible for any damage this script may cause (e.g. setting wrong prices on your items to sell). Always _double-check_ which changes have been made before hitting "Save Changes"!
