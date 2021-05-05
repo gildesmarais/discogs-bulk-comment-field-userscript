@@ -1,19 +1,20 @@
-// ====UserScript====
+// ==UserScript==
 // @name         Discogs.com bulk change public-comment-field
 // @version      0.3
 // @namespace    https://github.com/gildesmarais/discogs-bulk-comment-field-userscript/
 // @description  Allows bulk changing the public-comment-field of your selling items (prepend, suffix and remove text)
+// @match        https://www.discogs.com/sell/manage_edit
+// @grant        none
+// @require https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js
 // @updateURL    https://raw.github.com/gildesmarais/discogs-bulk-comment-field-userscript/master/discogs_bulk.user.js
-// @include      https://www.discogs.com/sell/manage_edit
-// @require      http://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js
-// ====/UserScript====
+// ==/UserScript==
 
-/* global $, jQuery, alert, prompt, confirm */
+/* global $, alert, prompt, confirm */
 
 showMenu()
 
 function showMenu () {
-  if (!jQuery) {
+  if (!$) {
     alert(
       "'Bulk change public-comment-field' can not be used. Please file a bug at https://github.com/gill0r/discogs-bulk-comment-field-userscript/issues"
     )
@@ -41,7 +42,8 @@ function showMenu () {
 
   menuElement.innerHTML = menuHtml
 
-  $('#page_content h1').after(menuElement)
+  const innerHTML = document.querySelector('#page_aside > .edit_items_aside').innerHTML
+  document.querySelector('#page_aside > .edit_items_aside').innerHTML = (menuElement.innerHTML + innerHTML)
 
   document.getElementById('user_prepend').addEventListener('click', prependText)
   document.getElementById('user_suffix').addEventListener('click', suffixText)
